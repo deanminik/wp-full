@@ -28,5 +28,10 @@ add_action('wp_enqueue_scripts', 'university_files');
 
 function university_features(){
     add_theme_support('title-tag'); //title-tag is not the only one.
+
+    //REGISTER NAV MENU
+    //headerMenuLocation -> to call it in the header file 
+    //Header Menu Location-> to see it en check it in wodpress section menu 
+    register_nav_menu('headerMenuLocation','Header Menu Location');
 }
-add_action('after_setup_theme','university_features');
+add_action('after_setup_theme','university_features'); //after_setup_theme -> this is our hook 
