@@ -28,14 +28,36 @@ while (have_posts()) {
         <?php } ?>
 
 
+        <?php 
+        // so get pages gets cero, null, false from de get the Id, It means that currently page does not have children pages 
+        $testArray = get_pages(array(
+            'child_of' => get_the_ID()
+        ));
+        
+        if($theParent or $testArray ){?>
 
-        <!-- <div class="page-links">
-            <h2 class="page-links__title"><a href="#">About Us</a></h2>
+            <div class="page-links">
+            <h2 class="page-links__title"><a href="<?php echo get_permalink($theParent); ?>"><?php echo get_the_title($theParent); ?></a></h2>
             <ul class="min-list">
-                <li class="current_page_item"><a href="#">Our History</a></li>
-                <li><a href="#">Our Goals</a></li>
+                <?php
+                if($theParent){
+                    $findChildrenOf = $theParent;
+                }else{
+                    $findChildrenOf = get_the_ID();
+                }
+                wp_list_pages(array(
+                    'title_li' => NULL,
+                    'child_of' => $findChildrenOf,
+                    'sort_column' => 'menu_order'
+                ));
+                ?>
+                <!-- <li class="current_page_item"><a href="#">Our History</a></li>
+                <li><a href="#">Our Goals</a></li> -->
             </ul>
-        </div> -->
+        </div>
+
+       <?php } ?>    
+       
 
         <div class="generic-content">
             <?php the_content(); ?>
