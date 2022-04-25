@@ -33,5 +33,8 @@ function university_features(){
     //headerMenuLocation -> to call it in the header file 
     //Header Menu Location-> to see it en check it in wodpress section menu 
     register_nav_menu('headerMenuLocation','Header Menu Location');
+    //REGISTER NAV MENU FOOTER
+    register_nav_menu('footerLocationOne','Footer Location One');
+    register_nav_menu('footerLocationTwo','Footer Location Two');
 }
 add_action('after_setup_theme','university_features'); //after_setup_theme -> this is our hook 
