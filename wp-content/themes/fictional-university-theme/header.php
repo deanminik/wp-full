@@ -2,6 +2,9 @@
 <html lang="en">
 
 <head>
+    <!-- To use a responsive dimension of every device use meta viewport, without this the web page will be seem 
+exactly from the desktop to mobile  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php wp_head(); ?>
     <!-- <title>Fictional University</title> -->
 </head>
