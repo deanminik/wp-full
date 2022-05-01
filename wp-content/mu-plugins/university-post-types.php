@@ -48,8 +48,8 @@ function university_post_types()
 
     // PROFESSOR POST TYPE
     register_post_type('professor', array(
-        'show_in_rest' => true,
-        'supports' => array('title', 'editor'),
+        'show_in_rest' => true,//This is to use the new editor of wordpress 
+        'supports' => array('title', 'editor','thumbnail'),
         'public' => true,
         'labels' => array(
             'name' => 'Professors',
