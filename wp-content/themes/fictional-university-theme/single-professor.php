@@ -4,12 +4,16 @@ while (have_posts()) {
     # code...
     the_post(); ?>
     <div class="page-banner">
-        <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('images/ocean.jpg') ?>)"></div>
+        <div class="page-banner__bg-image" style="background-image: url(<?php
+                                                                        $pageBannerImage = get_field('page_banner_background_image');
+                                                                        echo $pageBannerImage['sizes']['pageBanner']; ?>)">
+        </div>
         <div class="page-banner__content container container--narrow">
             <h1 class="page-banner__title"><?php the_title(); ?></h1>
             <div class="page-banner__intro">
 
-                <p>DON'T FORGET TO REPLACE ME LATER</p>
+                <p><?php the_field('page_banner_subtitle') ?></p>
+                <!-- Calling the custom field page_banner_subtitle -->
             </div>
         </div>
     </div>
@@ -17,7 +21,7 @@ while (have_posts()) {
 
         <div class="generic-content">
             <div class="row group">
-                <div class="one-third"> <?php the_post_thumbnail('professorPortrait'); ?></div> 
+                <div class="one-third"> <?php the_post_thumbnail('professorPortrait'); ?></div>
                 <!-- professorPortrait: this came from function university_features() to call our custom size image -->
                 <div class="two-thirds"> <?php the_content(); ?></div>
             </div>
@@ -37,8 +41,9 @@ while (have_posts()) {
 
         ?>
     </div>
-
-
+   
+    <!-- Use this code to read better inside of an array object  -->
+    <!-- <?php var_dump($pageBannerImage); ?> -->
 <?php }
 get_footer();
 ?>

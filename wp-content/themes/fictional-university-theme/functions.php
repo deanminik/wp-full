@@ -33,6 +33,9 @@ function university_features()
     add_image_size('professorLandscape', 400, 260, true); // professorLandscape just a nickname, true is just force those size 400, 260  
     add_image_size('professorPortrait', 480, 650, true);
 
+    add_image_size('pageBanner', 1500, 350, true);
+
+
     //REGISTER NAV MENU
     //headerMenuLocation -> to call it in the header file 
     //Header Menu Location-> to see it en check it in wodpress section menu 
