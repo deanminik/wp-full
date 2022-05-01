@@ -67,17 +67,17 @@ add_action('after_setup_theme', 'university_features'); //after_setup_theme -> t
 /*********************************************************************************************************************** */
 //
 
+
+//GENERARTE A BANNER FUNCTION 
 function university_adjust_queries($query)
-{   
+{
     //This is to custom your archive program page 
-    if(!is_admin() AND is_post_type_archive('program') AND $query->is_main_query()){
+    if (!is_admin() and is_post_type_archive('program') and $query->is_main_query()) {
         $query->set('orderby', 'title');
         $query->set('order', 'ASC');
         $query->set('posts_per_page', -1);
-
-
     }
-    if (!is_admin() AND is_post_type_archive('event') AND $query->is_main_query()) {
+    if (!is_admin() and is_post_type_archive('event') and $query->is_main_query()) {
         $today = date('Ymd');
         // $query->set('posts_per_page', '1');
         $query->set('meta_key', 'event_date');
@@ -94,3 +94,52 @@ function university_adjust_queries($query)
     }
 }
 add_action('pre_get_posts', 'university_adjust_queries');
+
+//NULL  is if someone wont add arguments, so the parameter won't be requered
+function pageBanner($args = NULL)
+{
+    //Apply this only is there not a title, this is if the user does not add a title 
+    if (!$args['title']) {
+        // set this title 
+        $args['title'] = get_the_title();
+    }
+    if (!$args['subtitle']) {
+        $args['subtitle'] = get_field('page_banner_subtitle');
+    }
+    if (!$args['photo']) {
+        if (get_field('page_banner_background_image') and !is_archive() and !is_home()) {
+            $args['photo'] = get_field('page_banner_background_image')['sizes']['pageBanner'];
+        } else {
+            $args['photo'] = 'http://localhost:10003/wp-content/uploads/2022/05/field-scaled.jpg';
+        }
+    }
+    /*      
+    The AND !is_archive() AND !is_home() is the new addition / fix.
+
+     Our Page Banner function works well in many situations, however, 
+     when used on an archive page (for example the All Events page/query)
+     if the first event in the list of events has a background image our 
+     code can get confused and try to use it as the banner for the entire Archive page.
+
+     To fix this and avoid potential errors in the next lesson, I want you to make a 
+     modification to your page banner function code right now. Essentially, inside the 
+     if condition where we check to see if the current post has a banner image custom 
+     field value or not... we want to add two more conditions to make sure the current 
+     query is not an archive or a blog listing. Below is the entire updated code for our 
+     pageBanner function:*/
+
+
+?>
+    <div class="page-banner">
+        <div class="page-banner__bg-image" style="background-image: url(<?php echo $args['photo']; ?>)">
+        </div>
+        <div class="page-banner__content container container--narrow">
+            <h1 class="page-banner__title"><?php echo $args['title'] ?></h1>
+            <div class="page-banner__intro">
+
+                <p><?php echo $args['subtitle'] ?></p>
+                <!-- Calling the custom field page_banner_subtitle -->
+            </div>
+        </div>
+    </div>
+<?php }
