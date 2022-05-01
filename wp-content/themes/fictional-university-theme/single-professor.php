@@ -17,7 +17,8 @@ while (have_posts()) {
 
         <div class="generic-content">
             <div class="row group">
-                <div class="one-third"> <?php the_post_thumbnail(); ?></div>
+                <div class="one-third"> <?php the_post_thumbnail('professorPortrait'); ?></div> 
+                <!-- professorPortrait: this came from function university_features() to call our custom size image -->
                 <div class="two-thirds"> <?php the_content(); ?></div>
             </div>
         </div>
