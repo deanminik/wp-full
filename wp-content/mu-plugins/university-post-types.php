@@ -43,5 +43,25 @@ function university_post_types()
     ));
      //IMPORTANT: Remember if you add a new parameter inside the array you need to go to the
     // setting-permalink and save
+
+     //****************************************************************************************************** */
+
+    // PROFESSOR POST TYPE
+    register_post_type('professor', array(
+        'show_in_rest' => true,
+        'supports' => array('title', 'editor'),
+        'public' => true,
+        'labels' => array(
+            'name' => 'Professors',
+            'add_new_item' => 'Add a new Professor',
+            'edit_item' => 'Edit Professor',
+            'all_items' => 'All Professors',
+            'singular_name' => 'Professor',
+        ),
+        'menu_icon' => 'dashicons-welcome-learn-more'
+
+    ));
+     //IMPORTANT: Remember if you add a new parameter inside the array you need to go to the
+    // setting-permalink and save
 }
 add_action('init', 'university_post_types');

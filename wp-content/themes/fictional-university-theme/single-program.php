@@ -24,6 +24,30 @@ while (have_posts()) {
             <?php the_content(); ?>
         </div>
         <?php
+        $relatedProfessors = new WP_Query(array(
+            'posts_per_page' => -1, // -1 means show all 
+            'post_type' => 'professor',
+            'orderby' => 'title',
+            'order' => 'ASC',
+            'meta_query' => array(
+                array(
+                    'key' => 'related_programs',
+                    'compare' => 'LIKE', //contains the id of the currently post 
+                    'value' => '"' . get_the_ID() . '"'
+                )
+            )
+        ));
+
+        if ($relatedProfessors->have_posts()) {
+            echo '<h2 class="headline headline--medium"> ' . get_the_title() . ' Professors </h2>';
+            while ($relatedProfessors->have_posts()) {
+                $relatedProfessors->the_post(); ?>
+                <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
+            <?php }
+        }
+
+        wp_reset_postdata();//Important if need to use multiple WP_QUERY, without this, it will only show one query 
+        //********* **************************************************************************/
         $today = date('Ymd');
         $homepageEvents = new WP_Query(array(
             'posts_per_page' => 2,
