@@ -45,7 +45,7 @@ while (have_posts()) {
                         <span class=""><?php the_title(); ?></span>
                     </a>
                 </li>
-        <?php }
+            <?php }
             echo '</ul>';
         }
 
@@ -85,8 +85,11 @@ while (have_posts()) {
         $relatedCampuses = get_field('related_campus');
         if ($relatedCampuses) {
             echo '<h2 class="headline headline--medium">' . get_the_title() . 'Blank is Available at these campuses</h2>';
-        }
-        ?>
+            foreach ($relatedCampuses as $campus) {
+            ?><li><a href="<?php echo get_the_permalink($campus) ?>"><?php echo get_the_title('$campus'); ?></a></li><?php
+                                                                                                                }
+                                                                                                            }
+                                                                                                                    ?>
     </div>
 
 
