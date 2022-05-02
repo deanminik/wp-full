@@ -143,3 +143,12 @@ function pageBanner($args = NULL)
         </div>
     </div>
 <?php }
+
+
+function universityMapKey($api){
+    //This is the google map key https://console.cloud.google.com/google/maps-apis/credentials?project=wordpress-theme-349004
+    $api['key'] = 'AIzaSyDMXyqP49IWhyCVxjBl-32Q9LKBJCh1tfI';
+    return $api;
+    //If in your page editor does not loaling correctly the map is beacuse you should add a credit card 
+}
+add_filter('acf/fields/google_map/api','universityMapKey');

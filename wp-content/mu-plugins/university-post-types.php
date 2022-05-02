@@ -63,5 +63,24 @@ function university_post_types()
     ));
      //IMPORTANT: Remember if you add a new parameter inside the array you need to go to the
     // setting-permalink and save
+
+    //*********************************************************************************************************** */
+    //CAMPUS POST TYPES
+    register_post_type('campus', array(
+        'show_in_rest' => true,
+        'supports' => array('title', 'editor', 'excerpt'),
+        'rewrite' => array('slug' => 'campuses'),
+        'has_archive' => true,
+        'public' => true, 
+        'labels' => array(
+            'name' => 'Campuses', 
+            'add_new_item' => 'Add a new Campus',
+            'edit_item' => 'Edit Campus',
+            'all_items' => 'All Campuses',
+            'singular_name' => 'Campus'
+        ),
+        'menu_icon' => 'dashicons-location-alt' 
+
+    ));
 }
 add_action('init', 'university_post_types');
