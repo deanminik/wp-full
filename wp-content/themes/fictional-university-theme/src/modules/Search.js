@@ -48,9 +48,14 @@ class Search {
     }
 
     getResults() {
-        this.resultsDiv.html("Imagine real search result here");
-        this.isSpinnerVisible = false;
+        // this.resultsDiv.html("Imagine real search result here");
+        // this.isSpinnerVisible = false;
+
+        $.getJSON('http://localhost:10003/wp-json/wp/v2/posts/?search=' + this.serachField.val(), function(posts) {
+            alert(posts[0].title.rendered);
+        });
     }
+
     keyPressDispatcher(e) {
         // e -> event
         //Find the key code
