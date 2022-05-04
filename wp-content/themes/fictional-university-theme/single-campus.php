@@ -3,6 +3,7 @@ get_header();
 while (have_posts()) {
     # code...
     the_post();
+    pageBanner();
 
 ?>
 
@@ -60,42 +61,10 @@ while (have_posts()) {
         }
 
         wp_reset_postdata(); //Important if need to use multiple WP_QUERY, without this, it will only show one query 
-        //********* **************************************************************************/
-        $today = date('Ymd');
-        $homepageEvents = new WP_Query(array(
-            'posts_per_page' => 2,
-            'post_type' => 'event',
-            // 'orderby' => 'title',
-            'meta_key' => 'event_date',
-            'orderby' => 'meta_value_num',
-            'order' => 'ASC',
-            'meta_query' => array(
-                array(
-                    'key' => 'event_date',
-                    'compare' => '>=',
-                    'value' => $today,
-                    'type' => 'numeric'
-                ),
-                array(
-                    'key' => 'related_programs',
-                    'compare' => 'LIKE', //contains the id of the currently post 
-                    'value' => '"' . get_the_ID() . '"'
-                )
-            )
-        ));
-
-        if ($homepageEvents->have_posts()) {
-            echo '<h2 class="headline headline--medium"> Upcoming ' . get_the_title() . ' Events </h2>';
-            while ($homepageEvents->have_posts()) {
-                $homepageEvents->the_post();
-                get_template_part('template-parts/content-event');
-            }
-        }
 
         ?>
-    </div>
 
 
-<?php  }
+    <?php  }
 get_footer();
-?>
+    ?>
