@@ -34,9 +34,7 @@ class Search {
                     this.resultsDiv.html('<div class="spinner-loader"></div>');
                     this.isSpinnerVisible = true;
                 }
-                this.typingTimer = setTimeout(() => {
-                    this.getResults().bind(this);
-                }, 2000); //The gap will be for 2 seconds
+                this.typingTimer = setTimeout(this.getResults.bind(this), 2000)
             } else {
                 this.resultsDiv.html('');
                 this.isSpinnerVisible = false;
@@ -52,20 +50,19 @@ class Search {
             // this.isSpinnerVisible = false;
 
             //REST API
-            $.getJSON('http://localhost:10003/wp-json/wp/v2/posts/?search=' + this.serachField.val(), posts => {
-                        // alert(posts[0].title.rendered);
-                        // => we are using this arraw function to do not use bind and point this resultDiv
-                        // <li><a href="${posts[0].link}">${posts[0].title.rendered}</a></li>
-
+            $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts/?search=' + this.serachField.val(), posts => {
+                        //  universityData.root_url  -> came from the functions    
+                        // $.getJSON("http://localhost:10003/wp-json/wp/v2/posts?search=" + this.searchField.val(), posts => {
                         this.resultsDiv.html(`
-            <h2 class="search-overlay__section-title">General Information</h2>
-            <ul class="link-list min-list">
-                ${posts.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
-            </ul>
-            
-            `);
-        });
-    }
+                    <h2 class="search-overlay__section-title">General Information</h2>
+                    ${ posts.length ? '<ul class="link-list min-list">':'<p>No general information matches that search </p>'}  
+                    ${posts.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
+                    ${posts.length ? '</ul>':''}
+                    `)
+                    this.isSpinnerVisible = false
+                  })
+                }
+              
 
     keyPressDispatcher(e) {
         // e -> event

@@ -17,6 +17,10 @@ function university_files()
     wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
     wp_enqueue_style('university_main_styles', get_theme_file_uri('/build/style-index.css'));
     wp_enqueue_style('university_extra_styles', get_theme_file_uri('/build/index.css'));
+   
+    wp_localize_script('main-university-js', 'universityData', array(
+        'root_url' => get_site_url()
+    ));
 }
 
 add_action('wp_enqueue_scripts', 'university_files');
@@ -148,10 +152,11 @@ function pageBanner($args = NULL)
 <?php }
 
 
-function universityMapKey($api){
+function universityMapKey($api)
+{
     //This is the google map key https://console.cloud.google.com/google/maps-apis/credentials?project=wordpress-theme-349004
     $api['key'] = 'AIzaSyDMXyqP49IWhyCVxjBl-32Q9LKBJCh1tfI';
     return $api;
     //If in your page editor does not loaling correctly the map is beacuse you should add a credit card 
 }
-add_filter('acf/fields/google_map/api','universityMapKey');
+add_filter('acf/fields/google_map/api', 'universityMapKey');
