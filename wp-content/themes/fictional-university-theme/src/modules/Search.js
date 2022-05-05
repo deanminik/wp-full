@@ -48,11 +48,22 @@ class Search {
     }
 
     getResults() {
-        // this.resultsDiv.html("Imagine real search result here");
-        // this.isSpinnerVisible = false;
+            // this.resultsDiv.html("Imagine real search result here");
+            // this.isSpinnerVisible = false;
 
-        $.getJSON('http://localhost:10003/wp-json/wp/v2/posts/?search=' + this.serachField.val(), function(posts) {
-            alert(posts[0].title.rendered);
+            //REST API
+            $.getJSON('http://localhost:10003/wp-json/wp/v2/posts/?search=' + this.serachField.val(), posts => {
+                        // alert(posts[0].title.rendered);
+                        // => we are using this arraw function to do not use bind and point this resultDiv
+                        // <li><a href="${posts[0].link}">${posts[0].title.rendered}</a></li>
+
+                        this.resultsDiv.html(`
+            <h2 class="search-overlay__section-title">General Information</h2>
+            <ul class="link-list min-list">
+                ${posts.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
+            </ul>
+            
+            `);
         });
     }
 
