@@ -58,7 +58,8 @@ function university_post_types()
             'all_items' => 'All Professors',
             'singular_name' => 'Professor',
         ),
-        'menu_icon' => 'dashicons-welcome-learn-more'
+        'menu_icon' => 'dashicons-welcome-learn-more',
+        'show_in_rest' => true
 
     ));
      //IMPORTANT: Remember if you add a new parameter inside the array you need to go to the
