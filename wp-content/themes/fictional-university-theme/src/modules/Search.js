@@ -48,27 +48,29 @@ class Search {
     }
 
     getResults() {
-            // this.resultsDiv.html("Imagine real search result here");
-            // this.isSpinnerVisible = false;
+            var posts_getJSON = $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.serachField.val());
+            var pages_getJSON = $.getJSON(universityData.root_url + '/wp-json/wp/v2/pages?search=' + this.serachField.val());
 
-            //REST API
-            $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts/?search=' + this.serachField.val(), posts => {
-                        //  universityData.root_url  -> came from the functions    
-                        // $.getJSON("http://localhost:10003/wp-json/wp/v2/posts?search=" + this.searchField.val(), posts => {
-                        $.getJSON(universityData.root_url + '/wp-json/wp/v2/pages/?search=' + this.serachField.val(), pages => {
-                                    // to combine multiple arrays we can use concat 
-                                    var combineResults = posts.concat(pages);
-                                    this.resultsDiv.html(`
+            //asynchronic 
+            $.when(posts_getJSON, pages_getJSON).then((posts, pages) => {
+                        var combineResults = posts[0].concat(pages[0]);
+                        this.resultsDiv.html(`
+                    
                     <h2 class="search-overlay__section-title">General Information</h2>
                     ${ combineResults.length ? '<ul class="link-list min-list">':'<p>No general information matches that search </p>'}  
                     ${combineResults.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
                     ${combineResults.length ? '</ul>':''}
-                    `)
-                    this.isSpinnerVisible = false
-                   });
-                  })
-                }
-              
+                    `);
+                    
+                    this.isSpinnerVisible = false;
+                                }, () => {
+                                    this.resultsDiv.html('<p>Unexpected error; please try again</p>');
+                                });
+
+    }
+
+
+
 
     keyPressDispatcher(e) {
         // e -> event
@@ -95,7 +97,7 @@ class Search {
         $("body").removeClass("body-no-scroll");
     }
 
-    addSearchHTML(){
+    addSearchHTML() {
         $("body").append(`
         <div class="search-overlay">
     <div class="search-overlay__top">
