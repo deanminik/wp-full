@@ -160,3 +160,16 @@ function universityMapKey($api)
     //If in your page editor does not loaling correctly the map is beacuse you should add a credit card 
 }
 add_filter('acf/fields/google_map/api', 'universityMapKey');
+
+
+function university_custom_rest(){
+    register_rest_field('post','authorName',array(
+        'get_callback' => function (){return get_the_author();}
+    ));
+
+    // register_rest_field('post','perfectlyCroppedImageURL',array(
+    //     'get_callback' => function (){return }
+    // ));
+}
+
+add_action('rest_api_init','university_custom_rest');
