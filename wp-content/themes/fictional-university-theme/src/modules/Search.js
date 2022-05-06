@@ -55,13 +55,17 @@ class Search {
             $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts/?search=' + this.serachField.val(), posts => {
                         //  universityData.root_url  -> came from the functions    
                         // $.getJSON("http://localhost:10003/wp-json/wp/v2/posts?search=" + this.searchField.val(), posts => {
-                        this.resultsDiv.html(`
+                        $.getJSON(universityData.root_url + '/wp-json/wp/v2/pages/?search=' + this.serachField.val(), pages => {
+                                    // to combine multiple arrays we can use concat 
+                                    var combineResults = posts.concat(pages);
+                                    this.resultsDiv.html(`
                     <h2 class="search-overlay__section-title">General Information</h2>
-                    ${ posts.length ? '<ul class="link-list min-list">':'<p>No general information matches that search </p>'}  
-                    ${posts.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
-                    ${posts.length ? '</ul>':''}
+                    ${ combineResults.length ? '<ul class="link-list min-list">':'<p>No general information matches that search </p>'}  
+                    ${combineResults.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
+                    ${combineResults.length ? '</ul>':''}
                     `)
                     this.isSpinnerVisible = false
+                   });
                   })
                 }
               
