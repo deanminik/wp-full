@@ -32,7 +32,9 @@ function universitySearchResult($data)
         if (get_post_type() == 'post' or get_post_type() == 'page') {
             array_push($results['generalInfo'], array(
                 'title' => get_the_title(),
-                'permalink' => get_the_permalink()
+                'permalink' => get_the_permalink(),
+                'postType' => get_post_type(),
+                'authorName' => get_the_author()
             )); //So in the second parameter we add the data we need to display 
         }
 
