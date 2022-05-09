@@ -87,5 +87,26 @@ function university_post_types()
         'menu_icon' => 'dashicons-location-alt' 
 
     ));
+
+
+     //****************************************************************************************************** */
+
+    // NOTE POST TYPE
+    register_post_type('note', array(
+        'show_in_rest' => true,//This is to use the new editor of wordpress 
+        'supports' => array('title', 'editor'),
+        'public' => false,//hide from people on the web site
+        'show_ui' => true,// show on the logged users 
+        'labels' => array(
+            'name' => 'Notes',
+            'add_new_item' => 'Add a new Note',
+            'edit_item' => 'Edit Note',
+            'all_items' => 'All Notes',
+            'singular_name' => 'Note',
+        ),
+        'menu_icon' => 'dashicons-welcome-write-blog',
+        
+
+    ));
 }
 add_action('init', 'university_post_types');
