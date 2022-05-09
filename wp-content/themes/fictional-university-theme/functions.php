@@ -175,3 +175,22 @@ function university_custom_rest(){
 add_action('rest_api_init','university_custom_rest');
 
 require get_theme_file_path('/inc/search-route.php');
+
+
+//REDIRECT SUBSCRIBERS ACCOUNTS OUT OF ADMIN AND ONTO HOMEPAGE 
+function redirectSubsToFrontEnd(){
+    $ourCurrentUser = wp_get_current_user(); 
+    if(count($ourCurrentUser->roles) == 1 AND $ourCurrentUser->roles[0] =='subscriber'){
+        wp_redirect(site_url('/'));
+        exit; // tel to wp stop whit that user 
+    }
+}
+add_action('admin_init', 'redirectSubsToFrontEnd');
+
+function noSubsAdminBar(){
+    $ourCurrentUser = wp_get_current_user(); 
+    if(count($ourCurrentUser->roles) == 1 AND $ourCurrentUser->roles[0] =='subscriber'){
+       show_admin_bar(false);
+    }
+}
+add_action('wp_loaded', 'noSubsAdminBar');
