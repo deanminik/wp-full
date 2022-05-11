@@ -105,6 +105,8 @@ function university_post_types()
             'singular_name' => 'Note',
         ),
         'menu_icon' => 'dashicons-welcome-write-blog',
+        'capability_type' => 'note',
+        'map_meta_cap' => true
         
 
     ));

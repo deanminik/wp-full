@@ -222,7 +222,24 @@ function ourLoginCSS()
 }
 add_action('login_enqueue_scripts', 'ourLoginCSS');
 
-function ourLoginTitle(){
+function ourLoginTitle()
+{
     return get_bloginfo('name');
 }
 add_filter('login_headertitle', 'ourLoginTitle');
+
+
+//FORCE NOTE POSTS TO BE PRIVATE 
+
+function makeNotePrivate($data)
+{
+    if ($data['post_type'] == 'note' and $data['post_status'] != 'trash') {
+        $data['post_status'] = 'private';
+    }
+
+    return $data;
+}
+//Filter-> the example of this is if you have a dirty water and want to clean it just put throw a filter to ge clean water 
+// so our water will be our $data
+//wp_insert_post_data -> put in our database
+add_filter('wp_insert_post_data', 'makeNotePrivate');
