@@ -171,6 +171,12 @@ function university_custom_rest()
         }
     ));
 
+    register_rest_field('note', 'userNoteCount', array(
+        'get_callback' => function () {
+            return count_user_posts(get_current_user_id(), 'note');
+        }
+    ));
+
     // register_rest_field('post','perfectlyCroppedImageURL',array(
     //     'get_callback' => function (){return }
     // ));
@@ -231,12 +237,15 @@ add_filter('login_headertitle', 'ourLoginTitle');
 
 //FORCE NOTE POSTS TO BE PRIVATE 
 
-function makeNotePrivate($data)
+function makeNotePrivate($data, $postarr)
 {
-    if($data['post_type'] == 'note'){
+    if ($data['post_type'] == 'note') {
+        if (count_user_posts(get_current_user_id(), 'note') > 4 and !$postarr['ID']) {
+            die("You have reached your note limit"); // this will be the answer in the console in your response 
+
+        }
         $data['post_content'] = sanitize_textarea_field($data['post_content']);
         $data['post_title'] = sanitize_text_field($data['post_title']);
-
     }
     if ($data['post_type'] == 'note' and $data['post_status'] != 'trash') {
         $data['post_status'] = 'private';
@@ -247,6 +256,7 @@ function makeNotePrivate($data)
 //Filter-> the example of this is if you have a dirty water and want to clean it just put throw a filter to ge clean water 
 // so our water will be our $data
 //wp_insert_post_data -> put in our database
-add_filter('wp_insert_post_data', 'makeNotePrivate');
+add_filter('wp_insert_post_data', 'makeNotePrivate', 10, 2);
 
-
+// 2 -> represents two parameters $data, $postarr 
+// 10 -> default order priority add_filter() so if you have many add_filter, just add the priority 
