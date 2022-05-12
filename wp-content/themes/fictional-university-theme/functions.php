@@ -260,3 +260,10 @@ add_filter('wp_insert_post_data', 'makeNotePrivate', 10, 2);
 
 // 2 -> represents two parameters $data, $postarr 
 // 10 -> default order priority add_filter() so if you have many add_filter, just add the priority 
+
+
+
+
+
+//REST API FOR LIKES 
+require get_theme_file_path('/inc/like-route.php');
