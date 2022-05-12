@@ -43,15 +43,15 @@ function university_post_types()
         'menu_icon' => 'dashicons-awards'
 
     ));
-     //IMPORTANT: Remember if you add a new parameter inside the array you need to go to the
+    //IMPORTANT: Remember if you add a new parameter inside the array you need to go to the
     // setting-permalink and save
 
-     //****************************************************************************************************** */
+    //****************************************************************************************************** */
 
     // PROFESSOR POST TYPE
     register_post_type('professor', array(
-        'show_in_rest' => true,//This is to use the new editor of wordpress 
-        'supports' => array('title', 'editor','thumbnail'),
+        'show_in_rest' => true, //This is to use the new editor of wordpress 
+        'supports' => array('title', 'editor', 'thumbnail'),
         'public' => true,
         'labels' => array(
             'name' => 'Professors',
@@ -64,7 +64,7 @@ function university_post_types()
         'show_in_rest' => true
 
     ));
-     //IMPORTANT: Remember if you add a new parameter inside the array you need to go to the
+    //IMPORTANT: Remember if you add a new parameter inside the array you need to go to the
     // setting-permalink and save
 
     //*********************************************************************************************************** */
@@ -76,27 +76,27 @@ function university_post_types()
         'supports' => array('title', 'editor', 'excerpt'),
         'rewrite' => array('slug' => 'campuses'),
         'has_archive' => true,
-        'public' => true, 
+        'public' => true,
         'labels' => array(
-            'name' => 'Campuses', 
+            'name' => 'Campuses',
             'add_new_item' => 'Add a new Campus',
             'edit_item' => 'Edit Campus',
             'all_items' => 'All Campuses',
             'singular_name' => 'Campus'
         ),
-        'menu_icon' => 'dashicons-location-alt' 
+        'menu_icon' => 'dashicons-location-alt'
 
     ));
 
 
-     //****************************************************************************************************** */
+    //****************************************************************************************************** */
 
     // NOTE POST TYPE
     register_post_type('note', array(
-        'show_in_rest' => true,//This is to use the new editor of wordpress 
+        'show_in_rest' => true, //This is to use the new editor of wordpress 
         'supports' => array('title', 'editor'),
-        'public' => false,//hide from people on the web site
-        'show_ui' => true,// show on the logged users 
+        'public' => false, //hide from people on the web site
+        'show_ui' => true, // show on the logged users 
         'labels' => array(
             'name' => 'Notes',
             'add_new_item' => 'Add a new Note',
@@ -107,8 +107,25 @@ function university_post_types()
         'menu_icon' => 'dashicons-welcome-write-blog',
         'capability_type' => 'note',
         'map_meta_cap' => true
-        
 
+
+    ));
+
+    // LIKE POST TYPE
+    register_post_type('like', array(
+        'show_in_rest' => false, //This is to use the new editor of wordpress 
+        'supports' => array('title'),
+        'public' => false, //hide from people on the web site
+        'show_ui' => true, // show on the logged users 
+        'labels' => array(
+            'name' => 'Likes',
+            'add_new_item' => 'Add a new Like',
+            'edit_item' => 'Edit Like',
+            'all_items' => 'All Likes',
+            'singular_name' => 'Like',
+        ),
+        'menu_icon' => 'dashicons-heart'
+        
     ));
 }
 add_action('init', 'university_post_types');
