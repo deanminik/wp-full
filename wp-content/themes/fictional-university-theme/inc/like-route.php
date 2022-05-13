@@ -28,7 +28,7 @@ function createLike($data)
             'post_type' => 'like',
             'meta_query' => array(
                 array(
-                    'key' => 'liked_professor_id', //costum filed name
+                    'key' => 'liked_professor_id', //costume filed name
                     'compare' => '=',
                     'value' => $professor
 
@@ -45,7 +45,7 @@ function createLike($data)
                 )
             ));
         } else {
-            die("Invalid proefessor id");
+            die("Invalid professor id");
         }
     } else {
         die("Only logged in users can create a like");

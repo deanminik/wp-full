@@ -267,3 +267,13 @@ add_filter('wp_insert_post_data', 'makeNotePrivate', 10, 2);
 
 //REST API FOR LIKES 
 require get_theme_file_path('/inc/like-route.php');
+
+
+//EXPORT TO HOSTING -> ignore some files
+add_filter('ai1wm_exclude_content_from_export', 'ignoreCertainFiles');
+
+function ignoreCertainFiles($exlude_filters)
+{
+    $exlude_filters[] = 'themes/fictional-university-theme/node_modules';
+    return $exlude_filters;
+}
