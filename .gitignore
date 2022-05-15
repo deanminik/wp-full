@@ -19,7 +19,13 @@ test.html
 readme.html
 wp-admin/
 wp-includes/
-wp-content/plugins
+wp-content/plugins/advanced-custom-fields
+wp-content/plugins/all-in-one-wp-migration
+wp-content/plugins/manual-image-crop
+wp-content/plugins/members
+wp-content/plugins/regenerate-thumbnails
+wp-content/plugins/wp-migrate-db
+wp-content/plugins/index.php
 wp-content/uploads
 wp-content/index.php
 wp-content/themes/fictional-university-theme/images
