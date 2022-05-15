@@ -32,13 +32,67 @@ class WordCountAndTimePlugin
         add_settings_field('wcp_location', 'Display Location', array($this, 'locationHTML'), 'word-count-settings-page', 'wcp_first_section');
         //register_setting -> this is to store values in our database 
 
-        register_setting('wordcountplugin', 'wcp_location', array('sanitize_callback' => 'sanitize_text_field', 'default' => '0'));
+        register_setting('wordcountplugin', 'wcp_location', array('sanitize_callback' => array($this, 'sanitizeLocation'), 'default' => '0'));
+
+        //********************************************************* */
+        add_settings_field('wcp_headline', 'Headline Text', array($this, 'headlineHTML'), 'word-count-settings-page', 'wcp_first_section');
+
+        register_setting('wordcountplugin', 'wcp_headline', array('sanitize_callback' => 'sanitize_text_field', 'default' => 'Post Statistics'));
+
+        //********************************************************* */
+        add_settings_field('wcp_wordCount', 'Word Count', array($this, 'wordCountHTML'), 'word-count-settings-page', 'wcp_first_section');
+
+        register_setting('wordcountplugin', 'wcp_wordCount', array('sanitize_callback' => 'sanitize_text_field', 'default' => '1'));
+
+        //********************************************************* */
+        add_settings_field('wcp_characterCount', 'Character Count', array($this, 'characterCountHTML'), 'word-count-settings-page', 'wcp_first_section');
+
+        register_setting('wordcountplugin', 'wcp_characterCount', array('sanitize_callback' => 'sanitize_text_field', 'default' => '1'));
+
+        //********************************************************* */
+        add_settings_field('wcp_readTime', 'Read Time', array($this, 'readTimeHTML'), 'word-count-settings-page', 'wcp_first_section');
+
+        register_setting('wordcountplugin', 'wcp_readTime', array('sanitize_callback' => 'sanitize_text_field', 'default' => '1'));
     }
+
+    function sanitizeLocation($input)
+    {
+        if ($input != '0' and $$input != '1') {
+            add_settings_error('wcp_location', 'wcp_location_error', 'Display location must be either beginning or ending');
+            // this is in case the user opens inspect elements end change the value. Useful to do not inject wrong selection 
+            return get_option('wcp_location');
+        }
+        return $input;
+    }
+
+    function  readTimeHTML()
+    { ?>
+        <input type="checkbox" name="wcp_readTime" value="1" <?php checked(get_option('wcp_readTime'), '1') ?>>
+    <?php }
+
+    function  characterCountHTML()
+    { ?>
+        <input type="checkbox" name="wcp_characterCount" value="1" <?php checked(get_option('wcp_characterCount'), '1') ?>>
+    <?php }
+
+    function  wordCountHTML()
+    { ?>
+        <input type="checkbox" name="wcp_wordCount" value="1" <?php checked(get_option('wcp_wordCount'), '1') ?>>
+    <?php }
+
+    function headlineHTML()
+    { ?>
+        <input type="text" name="wcp_headline" value="<?php echo esc_attr(get_option('wcp_headline')) ?>">
+    <?php }
+
     function locationHTML()
     { ?>
         <select name="wcp_location">
-            <option value="0">Beginning of post</option>
-            <option value="1">End of post</option>
+            <!-- get_option -> ask to the database just one time, so do not worry for requests 
+    also this when you refresh the setting you will get the data from database 
+    -->
+            <option value="0" <?php selected(get_option('wcp_location'), '0') ?>>Beginning of post</option>
+            <option value="1" <?php selected(get_option('wcp_location'), '1') ?>>End of post</option>
         </select>
     <?php }
 
