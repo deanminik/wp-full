@@ -6,6 +6,8 @@
  Version: 1.0
  AUthor: Dean 
  Author URI: http://localhost:10003/
+ Text Domain: wcpdomain
+ Domain Path: /languages
   
  */
 class WordCountAndTimePlugin
@@ -17,6 +19,11 @@ class WordCountAndTimePlugin
         add_action('admin_init', array($this, 'settings'));
 
         add_filter('the_content', array($this, 'ifWrap'));
+        add_action('init', array($this, 'languages'));
+    }
+  
+    function languages() {
+      load_plugin_textdomain('wcpdomain', false, dirname(plugin_basename(__FILE__)) . '/languages');
     }
     //$content -> the_content
     //1 or 0 -> true or false
@@ -41,7 +48,7 @@ class WordCountAndTimePlugin
             $wordCount = str_word_count(strip_tags($content));
         }
         if (get_option('wcp_wordCount', '1')) {
-            $html .= 'This post has ' . $wordCount . ' words.<br>';
+            $html .= esc_html__('This post has', 'wcpdomain') . ' ' . $wordCount . ' ' . __('words', 'wcpdomain') . '.<br>';
         }
         if (get_option('wcp_characterCount', '1')) {
             //strlen -> php function, len of a string 
@@ -151,7 +158,7 @@ class WordCountAndTimePlugin
         //manage_options -> Those are the capabilities allowed for the user 
         //word-count-settings-page -> End of the url 
         //ourSettingsPageHTML -> The page with settings 
-        add_options_page('Word Count Settings', 'Word Count', 'manage_options', 'word-count-settings-page', array($this, 'ourHTML'));
+        add_options_page('Word Count Settings', __('Word Count', 'wcpdomain'), 'manage_options', 'word-count-settings-page', array($this, 'ourHTML'));
     }
 
     function ourHTML()
