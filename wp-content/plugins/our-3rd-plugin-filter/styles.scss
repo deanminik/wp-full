@@ -1,0 +1,8 @@
+.word-filter__flex-container {
+    display: flex;
+    textarea {
+        flex: 1;
+        height: 100px;
+        margin-bottom: 20px;
+    }
+}
