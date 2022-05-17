@@ -24,30 +24,6 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
         )
     },
     save: (props) => {
-        return (
-            <h1>Today the sky is JAJAJA <span className="skyColor">{props.attributes.skyColor}</span> and the grass is <span className="grassColor">{props.attributes.grassColor}</span>.</h1>
-        )
-    },
-    deprecated: [{
-        //you add all old version of save
-        attributes: {
-            skyColor: { type: "string" },
-            grassColor: { type: "string" }
-        },
-        save: (props) => {
-            return (
-                <h3>Today the sky is <span className="skyColor">{props.attributes.skyColor}</span> and the grass is <span className="grassColor">{props.attributes.grassColor}</span>.</h3>
-            )
-        }
-    }, {
-        attributes: {
-            skyColor: { type: "string" },
-            grassColor: { type: "string" }
-        },
-        save: (props) => {
-            return (
-                <p>Today the sky is <span className="skyColor">{props.attributes.skyColor}</span> and the grass is <span className="grassColor">{props.attributes.grassColor}</span>.</p>
-            )
-        }
-    }]
+        return null
+    }
 })
