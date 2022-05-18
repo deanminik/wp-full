@@ -20,23 +20,24 @@ class AreYouPayingAttention
     function adminAssets()
     {
         //wp-blocks -> to load our js in the edit page of the post
-        //wp-element -> to re force the load of the wp.element from your js file 
+        //wp-element -> to re force the load of the wp.element from your js file previous 
         //wp_enqueue_script('ourNewBlockType', plugin_dir_url(__FILE__) . 'build/index.js', array('wp-blocks', 'wp-element'));
-        
-        wp_register_script('ourNewBlockType', plugin_dir_url(__FILE__) . 'build/index.js', array('wp-blocks', 'wp-element'));
+        // wp-editor -> To avoid an error message when load the page editor 
+        wp_register_script('ourNewBlockType', plugin_dir_url(__FILE__) . 'build/index.js', array('wp-blocks', 'wp-element', 'wp-editor'));
+        wp_register_style('quizeditcss', plugin_dir_url(__FILE__) . 'build/index.css');
         //ourplugin/are-you-paying-attention -> this came from src/index.js 
         register_block_type('ourplugin/are-you-paying-attention', array(
-            'editor_script' => 'ourNewBlockType', 
+            'editor_script' => 'ourNewBlockType',
+            'editor_style' => 'quizeditcss',
             'render_callback' => array($this, 'theHTML')
-
         ));
-
     }
-    function theHTML($attributes){
+    function theHTML($attributes)
+    {
         //return'<h1>Today the sky is'. $attributes['skyColor'].' and the grass is x'.$attributes['grassColor'] .'. !!!</h1>';
         ob_start(); ?>
-        <h3>Today the sky is <?php echo esc_html($attributes['skyColor'])?> and the grass is <?php echo esc_html($attributes['grassColor']) ?> .!!!</h3>;
-        <?php return ob_get_clean(); ?>
+        <h3>Today the sky is <?php echo esc_html($attributes['skyColor']) ?> and the grass is <?php echo esc_html($attributes['grassColor']) ?> .!!!</h3>;
+<?php return ob_get_clean();
     }
 }
 
