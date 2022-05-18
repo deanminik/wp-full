@@ -4,5 +4,21 @@
     border: 1px solid #f1f1f1;
     background-color: #d6d6d5;
 
-
+    .mark-as-correct {
+        color: orange;
+        position: relative;
+        top: -3px;
+        transition: transform 0.3s ease-out;
+        &:hover {
+            transform: scale(1.25) rotate(12deg);
+        }
+    }
+    .attention-delete {
+        color: red;
+        position: relative;
+        top: -5px;
+        &:hover {
+            color: #c20000 !important;
+        }
+    }
 }
