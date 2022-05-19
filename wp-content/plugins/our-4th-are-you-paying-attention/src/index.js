@@ -3,6 +3,27 @@ import { TextControl, Flex, FlexBlock, FlexItem, Button, Icon } from "@wordpress
 
 // This came from the package of @wordpress/scripts so it is not necessary to import React
 // https://developer.wordpress.org/block-editor/reference-guides/packages/packages-components/
+//https://developer.wordpress.org/block-editor/reference-guides/components/icon/
+
+(function () {
+    let locked = false
+
+    wp.data.subscribe(function () {
+        const results = wp.data.select("core/block-editor").getBlocks().filter(function (block) {
+            return block.name == "ourplugin/are-you-paying-attention" && block.attributes.correctAnswer == undefined
+        })
+
+        if (results.length && locked == false) {
+            locked = true
+            wp.data.dispatch("core/editor").lockPostSaving("noanswer")
+        }
+
+        if (!results.length && locked) {
+            locked = false
+            wp.data.dispatch("core/editor").unlockPostSaving("noanswer")
+        }
+    })
+})()
 
 wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
     title: "Are You Paying Attention?",
@@ -10,7 +31,8 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
     category: "common",
     attributes: {
         question: { type: "string" },
-        answers: { type: "array", default: ["red", "blue"] }
+        answers: { type: "array", default: [""] },
+        correctAnswer: { type: "number", default: undefined }
     },
     edit: EditComponent,
     save: (props) => {
@@ -40,6 +62,15 @@ function EditComponent(props) {
             return index != indexToDelete
         })
         props.setAttributes({ answers: newAnswers })
+
+        if (indexToDelete == props.attributes.correctAnswer) {
+            // is this is true 
+            props.setAttributes({ correctAnswer: undefined })
+            //This is if we delete the row with the full yellow star, then put back undefined the all row with thi empty star
+        }
+    }
+    function markAsCorrect(index) {
+        props.setAttributes({ correctAnswer: index })
     }
     return (
         /* <input type="text" placeholder="sky color" value={props.attributes.skyColor} onChange={updateSkyColor} />
@@ -65,8 +96,8 @@ function EditComponent(props) {
                             }} />
                         </FlexBlock>
                         <FlexItem>
-                            <Button>
-                                <Icon className="mark-as-correct" icon="star-empty" />
+                            <Button onClick={() => markAsCorrect(index)}>
+                                <Icon className="mark-as-correct" icon={props.attributes.correctAnswer == index ? "star-filled" : "star-empty"} />
                             </Button>
                         </FlexItem>
                         <FlexItem>
