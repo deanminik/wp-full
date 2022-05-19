@@ -34,9 +34,17 @@ class AreYouPayingAttention
     }
     function theHTML($attributes)
     {
+        //The end of this line, here array('wp-element') is call dependencies 
+        if (!is_admin()) {
+            //This condition is to do not load those file in the admin page 
+            wp_enqueue_script('attentionFrontend', plugin_dir_url(__FILE__) . 'build/frontend.js', array('wp-element'));
+            wp_enqueue_style('attentionFrontendStyles', plugin_dir_url(__FILE__) . 'build/frontend.css');
+        }
         //return'<h1>Today the sky is'. $attributes['skyColor'].' and the grass is x'.$attributes['grassColor'] .'. !!!</h1>';
         ob_start(); ?>
-        <h3>Today the sky is <?php echo esc_html($attributes['skyColor']) ?> and the grass is <?php echo esc_html($attributes['grassColor']) ?> .!!!</h3>;
+        <div class="paying-attention-update-me">
+
+        </div>
 <?php return ob_get_clean();
     }
 }
