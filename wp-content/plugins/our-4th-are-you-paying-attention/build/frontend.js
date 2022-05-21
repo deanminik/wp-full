@@ -132,14 +132,20 @@ __webpack_require__.r(__webpack_exports__);
 
 const divsToUpdate = document.querySelectorAll(".paying-attention-update-me");
 divsToUpdate.forEach(div => {
-  react_dom__WEBPACK_IMPORTED_MODULE_2___default().render((0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Quiz, null), div);
+  const data = JSON.parse(div.querySelector("pre").innerHTML); // ReactDOM.render(<Quiz question={question} />, div)
+  // ReactDOM.render(<Quiz data={data} />, div)
+
+  react_dom__WEBPACK_IMPORTED_MODULE_2___default().render((0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Quiz, data), div); // this way is the same of the previous one, this is called d structure 
+
   div.classList.remove("paying-attention-update-me");
 });
 
-function Quiz() {
+function Quiz(props) {
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "paying-attention-frontend"
-  }, "Hello from React");
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, props.question), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, props.answers.map(answer => {
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, answer);
+  })));
 }
 }();
 /******/ })()
