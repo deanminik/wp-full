@@ -133,6 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 const divsToUpdate = document.querySelectorAll(".paying-attention-update-me");
 divsToUpdate.forEach(div => {
   react_dom__WEBPACK_IMPORTED_MODULE_2___default().render((0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Quiz, null), div);
+  div.classList.remove("paying-attention-update-me");
 });
 
 function Quiz() {

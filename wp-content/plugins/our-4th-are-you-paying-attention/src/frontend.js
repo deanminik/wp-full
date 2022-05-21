@@ -6,6 +6,7 @@ const divsToUpdate = document.querySelectorAll(".paying-attention-update-me");
 
 divsToUpdate.forEach((div) => {
     ReactDOM.render(<Quiz />, div)
+    div.classList.remove("paying-attention-update-me")
 
 })
 
