@@ -16,6 +16,7 @@ class FeaturedProfessor
   function __construct()
   {
     add_action('init', [$this, 'onInit']);
+    add_action('rest_api_init', [$this, 'profHTML']);
   }
 
   function onInit()
@@ -28,6 +29,29 @@ class FeaturedProfessor
       'editor_script' => 'featuredProfessorScript',
       'editor_style' => 'featuredProfessorStyle'
     ));
+  }
+  function profHTML()
+  {
+    /*arguments
+    1- name and version of the url 
+    2- specific name for the route
+    3- array of options
+    */
+    register_rest_route('featuredProfessor/v1', 'getHTML', array(
+      'methods' => WP_REST_SERVER::READABLE,
+      'callback' => [$this, 'getProfHTML']
+
+    ));
+  }
+  function getProfHTML($data)
+  {
+    //http://localhost:10003/wp-json/featuredProfessor/v1/getHTML
+    // return '<h4>Hello from our endpoint</h4>';
+
+    return generateProfessorHTML($data['profId']);
+    // http://localhost:10003/wp-json/featuredProfessor/v1/getHTML?profId=73
+    // that 73 is from this post http://localhost:10003/professor/dr-barksalot/ 
+    //
   }
   //This function is put on frontend with the option option from the page editor 
   function renderCallback($attributes)
