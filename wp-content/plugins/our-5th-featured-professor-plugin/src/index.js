@@ -21,19 +21,51 @@ function EditComponent(props) {
   const [thePreview, setThePreview] = useState("")
 
   useEffect(() => {
+    // updateTheMeta()
 
-    async function go() {
-      //wordpress tool
-      const response = await apiFetch({
-        path: `featuredProfessor/v1/getHTML?profId=${props.attributes.profId}`,
-        method: "GET"
-      })
-      setThePreview(response)
+    // async function go() {
+    //   //wordpress tool
+    //   const response = await apiFetch({
+    //     path: `featuredProfessor/v1/getHTML?profId=${props.attributes.profId}`,
+    //     method: "GET"
+    //   })
+    //   setThePreview(response)
+    // }
+    // go()
+    if(props.attributes.profId){
+      updateTheMeta()
+
+      async function go() {
+        //wordpress tool
+        const response = await apiFetch({
+          path: `featuredProfessor/v1/getHTML?profId=${props.attributes.profId}`,
+          method: "GET"
+        })
+        setThePreview(response)
+      }
+      go()
     }
-    go()
 
   }, [props.attributes.profId])// useEffect is watching [props.attributes.profId] for changes, for example if someone is clicking
   //different option in the dropdown  
+
+  useEffect(() => {
+    return () => {
+      updateTheMeta()
+    }
+  }, [])
+
+  function updateTheMeta() {
+    // Select all block types from the editor
+    //const profsForMeta = wp.data.select("core/block-editor").getBlocks(); // This returns an array of all blocks, paragraph, lists etc  
+    const profsForMeta = wp.data.select("core/block-editor").getBlocks().filter(x => x.name == "ourplugin/featured-professor").map(x => x.attributes.profId).filter((x, index, arr) => { return arr.indexOf(x) == index })
+    //This 
+    // is to bring only the data the id from our custom blocks and not duplicated id 
+    //(x, index, arr using indexOf asking if anything inside your array thereis is a value like this indexOf(value)
+    console.log(profsForMeta)
+
+    wp.data.dispatch("core/editor").editPost({ meta: { featuredProfessor: profsForMeta } }) //this only save in javascript memory, not to the database 
+  }
 
   const allProfs = useSelect(select => {
     return select("core").getEntityRecords("postType", "professor", { per_page: -1 })

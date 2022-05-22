@@ -162,18 +162,55 @@ wp.blocks.registerBlockType("ourplugin/featured-professor", {
 function EditComponent(props) {
   const [thePreview, setThePreview] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)("");
   (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
-    async function go() {
-      //wordpress tool
-      const response = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_4___default()({
-        path: `featuredProfessor/v1/getHTML?profId=${props.attributes.profId}`,
-        method: "GET"
-      });
-      setThePreview(response);
-    }
+    // updateTheMeta()
+    // async function go() {
+    //   //wordpress tool
+    //   const response = await apiFetch({
+    //     path: `featuredProfessor/v1/getHTML?profId=${props.attributes.profId}`,
+    //     method: "GET"
+    //   })
+    //   setThePreview(response)
+    // }
+    // go()
+    if (props.attributes.profId) {
+      updateTheMeta();
 
-    go();
+      async function go() {
+        //wordpress tool
+        const response = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_4___default()({
+          path: `featuredProfessor/v1/getHTML?profId=${props.attributes.profId}`,
+          method: "GET"
+        });
+        setThePreview(response);
+      }
+
+      go();
+    }
   }, [props.attributes.profId]); // useEffect is watching [props.attributes.profId] for changes, for example if someone is clicking
   //different option in the dropdown  
+
+  (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
+    return () => {
+      updateTheMeta();
+    };
+  }, []);
+
+  function updateTheMeta() {
+    // Select all block types from the editor
+    //const profsForMeta = wp.data.select("core/block-editor").getBlocks(); // This returns an array of all blocks, paragraph, lists etc  
+    const profsForMeta = wp.data.select("core/block-editor").getBlocks().filter(x => x.name == "ourplugin/featured-professor").map(x => x.attributes.profId).filter((x, index, arr) => {
+      return arr.indexOf(x) == index;
+    }); //This 
+    // is to bring only the data the id from our custom blocks and not duplicated id 
+    //(x, index, arr using indexOf asking if anything inside your array thereis is a value like this indexOf(value)
+
+    console.log(profsForMeta);
+    wp.data.dispatch("core/editor").editPost({
+      meta: {
+        featuredProfessor: profsForMeta
+      }
+    }); //this only save in javascript memory, not to the database 
+  }
 
   const allProfs = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(select => {
     return select("core").getEntityRecords("postType", "professor", {
