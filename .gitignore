@@ -19,6 +19,7 @@ test.html
 readme.html
 wp-admin/
 wp-includes/
+wp-content/languages/
 wp-content/plugins/our-5th-featured-professor-plugin/node_modules
 wp-content/plugins/our-5th-featured-professor-plugin/build
 wp-content/plugins/our-4th-are-you-paying-attention/node_modules
