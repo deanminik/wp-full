@@ -21,9 +21,9 @@ function EditComponent(props) {
         {/* We will have a select dropdown form element here. */}
         <select onChange={e => props.setAttributes({ profId: e.target.value })}>
           <option value="">Select a professor</option>
-          <option value="1" selected={props.attributes.profId ==1}>1</option>
-          <option value="2" selected={props.attributes.profId ==2}>2</option>
-          <option value="3" selected={props.attributes.profId ==1}>3</option>
+          <option value="1" selected={props.attributes.profId ==1}> 1</option>
+          <option value="2" selected={props.attributes.profId ==2}> 2</option>
+          <option value="3" selected={props.attributes.profId ==1}> 3</option>
         </select>
       </div>
       <div>

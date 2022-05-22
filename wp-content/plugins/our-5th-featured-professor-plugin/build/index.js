@@ -134,13 +134,13 @@ function EditComponent(props) {
   }, "Select a professor"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     value: "1",
     selected: props.attributes.profId == 1
-  }, "1"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+  }, " 1"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     value: "2",
     selected: props.attributes.profId == 2
-  }, "2"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+  }, " 2"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     value: "3",
     selected: props.attributes.profId == 1
-  }, "3"))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "The HTML preview of the selected professor will appear here."));
+  }, " 3"))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "The HTML preview of the selected professor will appear here."));
 }
 }();
 /******/ })()
