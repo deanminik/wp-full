@@ -16212,6 +16212,13 @@ function EditComponent(props) {
   // function updateGrassColor(event) {
   //     props.setAttributes({ grassColor: event.target.value })
   // }
+  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)({
+    className: "paying-attention-edit-block",
+    style: {
+      backgroundColor: props.attributes.bgColor
+    }
+  });
+
   function updateQuestion(value) {
     // Instead event parameter like the other functions with wordpress components calling this function, whatever we want 
     props.setAttributes({
@@ -16249,12 +16256,7 @@ function EditComponent(props) {
     /* Start using wordpress Components  
      https://developer.wordpress.org/block-editor/reference-guides/packages/packages-components/
      */
-    (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      className: "paying-attention-edit-block",
-      style: {
-        backgroundColor: props.attributes.bgColor
-      }
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.BlockControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.AlignmentToolbar, {
+    (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.BlockControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.AlignmentToolbar, {
       value: props.attributes.theAlignment,
       onChange: x => props.setAttributes({
         theAlignment: x

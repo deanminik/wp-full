@@ -1,6 +1,6 @@
 import "./index.scss"
 import { TextControl, Flex, FlexBlock, FlexItem, Button, Icon, PanelBody, PanelRow, ColorPicker } from "@wordpress/components"
-import { InspectorControls, BlockControls, AlignmentToolbar } from "@wordpress/block-editor" // we did not install this @wordpress/block-editor but wordpress package browser search for us 
+import { InspectorControls, BlockControls, AlignmentToolbar, useBlockProps } from "@wordpress/block-editor" // we did not install this @wordpress/block-editor but wordpress package browser search for us 
 import { ChromePicker } from "react-color"
 
 // This came from the package of @wordpress/scripts so it is not necessary to import React
@@ -67,6 +67,11 @@ function EditComponent(props) {
     //     props.setAttributes({ grassColor: event.target.value })
     // }
 
+    const blockProps = useBlockProps({
+        className:"paying-attention-edit-block",
+        style:{ backgroundColor: props.attributes.bgColor }
+    })
+
     function updateQuestion(value) {
         // Instead event parameter like the other functions with wordpress components calling this function, whatever we want 
         props.setAttributes({ question: value })
@@ -97,7 +102,7 @@ function EditComponent(props) {
         /* Start using wordpress Components  
          https://developer.wordpress.org/block-editor/reference-guides/packages/packages-components/
          */
-        <div className="paying-attention-edit-block" style={{ backgroundColor: props.attributes.bgColor }}>
+        <div {...blockProps}>
             <BlockControls>
                 <AlignmentToolbar value={props.attributes.theAlignment} onChange={x => props.setAttributes({ theAlignment: x })} />
             </BlockControls>
