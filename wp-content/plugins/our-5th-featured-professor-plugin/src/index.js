@@ -3,6 +3,10 @@ import { useSelect } from "@wordpress/data"
 import { useState, useEffect } from "react"
 import apiFetch from "@wordpress/api-fetch"
 
+//wp.i18.__ -> this is to look in the global scope instead of"@wordpress/data" "react" or "@wordpress/api-fetch"
+
+const __ = wp.i18n.__
+
 wp.blocks.registerBlockType("ourplugin/featured-professor", {
   title: "Professor Callout",
   description: "Include a short description and link to a professor of your choice",
@@ -32,7 +36,7 @@ function EditComponent(props) {
     //   setThePreview(response)
     // }
     // go()
-    if(props.attributes.profId){
+    if (props.attributes.profId) {
       updateTheMeta()
 
       async function go() {
@@ -72,6 +76,7 @@ function EditComponent(props) {
   })
 
   // console.log(allProfs)
+  /* featured-professor is our text domain from featured-professor.php */
 
   if (allProfs == undefined) return <p>Loading...</p>
   return (
@@ -79,7 +84,8 @@ function EditComponent(props) {
       <div className="professor-select-container">
         {/* We will have a select dropdown form element here. */}
         <select onChange={e => props.setAttributes({ profId: e.target.value })}>
-          <option value="">Select a professor</option>
+          <option value="">{__("Select a professor", "featured-professor")}</option>
+
           {allProfs.map(prof => {
             return (
               <option value={prof.id} selected={props.attributes.profId == prof.id}> {prof.title.rendered}</option>

@@ -142,7 +142,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ //wp.i18.__ -> this is to look in the global scope instead of"@wordpress/data" "react" or "@wordpress/api-fetch"
 
+const __ = wp.i18n.__;
 wp.blocks.registerBlockType("ourplugin/featured-professor", {
   title: "Professor Callout",
   description: "Include a short description and link to a professor of your choice",
@@ -218,6 +220,8 @@ function EditComponent(props) {
     });
   }); // console.log(allProfs)
 
+  /* featured-professor is our text domain from featured-professor.php */
+
   if (allProfs == undefined) return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Loading...");
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "featured-professor-wrapper"
@@ -229,7 +233,7 @@ function EditComponent(props) {
     })
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     value: ""
-  }, "Select a professor"), allProfs.map(prof => {
+  }, __("Select a professor", "featured-professor")), allProfs.map(prof => {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
       value: prof.id,
       selected: props.attributes.profId == prof.id
