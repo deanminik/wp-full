@@ -1,5 +1,7 @@
 import "./index.scss"
-import { TextControl, Flex, FlexBlock, FlexItem, Button, Icon } from "@wordpress/components"
+import { TextControl, Flex, FlexBlock, FlexItem, Button, Icon, PanelBody, PanelRow, ColorPicker } from "@wordpress/components"
+import { InspectorControls } from "@wordpress/block-editor" // we did not install this @wordpress/block-editor but wordpress package browser search for us 
+import {ChromePicker} from "react-color"
 
 // This came from the package of @wordpress/scripts so it is not necessary to import React
 // https://developer.wordpress.org/block-editor/reference-guides/packages/packages-components/
@@ -32,7 +34,8 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
     attributes: {
         question: { type: "string" },
         answers: { type: "array", default: [""] },
-        correctAnswer: { type: "number", default: undefined }
+        correctAnswer: { type: "number", default: undefined },
+        bgColor: { type: "string", default: "#EBEBEB" }
     },
     edit: EditComponent,
     save: (props) => {
@@ -81,7 +84,16 @@ function EditComponent(props) {
         /* Start using wordpress Components  
          https://developer.wordpress.org/block-editor/reference-guides/packages/packages-components/
          */
-        <div className="paying-attention-edit-block">
+        <div className="paying-attention-edit-block" style={{ backgroundColor: props.attributes.bgColor }}>
+            <InspectorControls >
+                <PanelBody title="Background Color">
+                    <PanelRow>
+                        {/* Hello  */}
+                        {/* <ColorPicker color={props.attributes.bgColor} onChangeComplete={(x) => props.setAttributes({ bgColor: x.hex })} /> this is using the default wordpress picker */}
+                        <ChromePicker color={props.attributes.bgColor} onChangeComplete={(x) => props.setAttributes({ bgColor: x.hex })} disableAlpha={true}/>
+                    </PanelRow>
+                </PanelBody>
+            </InspectorControls>
             <TextControl label="Question:" value={props.attributes.question} onChange={updateQuestion} style={{ fontSize: "20px" }} />
             <p style={{ fontSize: "13px", margin: "20px 0 8px 0" }}>Answers:</p>
             {props.attributes.answers.map((answer, index) => {

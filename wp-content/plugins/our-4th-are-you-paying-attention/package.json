@@ -16,6 +16,7 @@
         "@wordpress/scripts": "^23.0.0"
     },
     "dependencies": {
+        "react-color": "^2.19.3",
         "watch": "^0.13.0"
     }
 }
