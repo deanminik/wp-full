@@ -45,7 +45,7 @@ function Quiz(props) {
     }
 
     return (
-        <div className="paying-attention-frontend" style={{ backgroundColor: props.bgColor }}>
+        <div className="paying-attention-frontend" style={{ backgroundColor: props.bgColor, textAlign:props.theAlignment }}>
             {/* {props.question} */}
             {/* {props.data.question} */}
             <p>{props.question}</p>

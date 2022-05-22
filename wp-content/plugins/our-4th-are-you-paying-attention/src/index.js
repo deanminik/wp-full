@@ -1,7 +1,7 @@
 import "./index.scss"
 import { TextControl, Flex, FlexBlock, FlexItem, Button, Icon, PanelBody, PanelRow, ColorPicker } from "@wordpress/components"
-import { InspectorControls } from "@wordpress/block-editor" // we did not install this @wordpress/block-editor but wordpress package browser search for us 
-import {ChromePicker} from "react-color"
+import { InspectorControls, BlockControls, AlignmentToolbar } from "@wordpress/block-editor" // we did not install this @wordpress/block-editor but wordpress package browser search for us 
+import { ChromePicker } from "react-color"
 
 // This came from the package of @wordpress/scripts so it is not necessary to import React
 // https://developer.wordpress.org/block-editor/reference-guides/packages/packages-components/
@@ -27,6 +27,7 @@ import {ChromePicker} from "react-color"
     })
 })()
 
+//This part is to store your options
 wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
     title: "Are You Paying Attention?",
     icon: "smiley",
@@ -35,7 +36,19 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
         question: { type: "string" },
         answers: { type: "array", default: [""] },
         correctAnswer: { type: "number", default: undefined },
-        bgColor: { type: "string", default: "#EBEBEB" }
+        bgColor: { type: "string", default: "#EBEBEB" },
+        theAlignment: {type: "string", default: "left"}
+      
+    },
+    description: "Give your audience a chance to prove their comprehension.",
+    example:{
+        attributes:{
+            question: "What is my name?",
+            correctAnswer: 3,
+            answers: ['Meowsalot', 'Barksalot', 'Purrsloud', 'Brad'],
+            theAlignment: "center",
+            bgColor: "#CFE8F1"
+        }
     },
     edit: EditComponent,
     save: (props) => {
@@ -85,12 +98,15 @@ function EditComponent(props) {
          https://developer.wordpress.org/block-editor/reference-guides/packages/packages-components/
          */
         <div className="paying-attention-edit-block" style={{ backgroundColor: props.attributes.bgColor }}>
+            <BlockControls>
+                <AlignmentToolbar value={props.attributes.theAlignment} onChange={x => props.setAttributes({ theAlignment: x })} />
+            </BlockControls>
             <InspectorControls >
                 <PanelBody title="Background Color">
                     <PanelRow>
                         {/* Hello  */}
                         {/* <ColorPicker color={props.attributes.bgColor} onChangeComplete={(x) => props.setAttributes({ bgColor: x.hex })} /> this is using the default wordpress picker */}
-                        <ChromePicker color={props.attributes.bgColor} onChangeComplete={(x) => props.setAttributes({ bgColor: x.hex })} disableAlpha={true}/>
+                        <ChromePicker color={props.attributes.bgColor} onChangeComplete={(x) => props.setAttributes({ bgColor: x.hex })} disableAlpha={true} />
                     </PanelRow>
                 </PanelBody>
             </InspectorControls>
