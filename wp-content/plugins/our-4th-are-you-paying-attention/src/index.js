@@ -142,7 +142,7 @@ function EditComponent(props) {
             <Button isPrimary onClick={() => {
                 props.setAttributes({ answers: props.attributes.answers.concat([""]) })
             }}>Add another answer</Button>
-            {/* isPrimary is to add styles like boostrap  */}
+            {/* isPrimary is to add styles like Boostrap  */}
         </div>
     )
 }
