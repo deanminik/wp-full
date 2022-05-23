@@ -21,9 +21,9 @@ class PetAdoptionTablePlugin
 
     add_action('activate_new-database-table/new-database-table.php', array($this, 'onActivate')); // this run when the plugin is active
     //If you want to create one row in the database uncomment 
-    add_action('admin_head', array($this, 'onAdminRefresh'));
+    // add_action('admin_head', array($this, 'onAdminRefresh'));
     //If you want to create multiples rows in the database uncomment 
-    // add_action('admin_head', array($this, 'populateFast'));
+    add_action('admin_head', array($this, 'populateFast'));
 
     add_action('wp_enqueue_scripts', array($this, 'loadAssets'));
     add_filter('template_include', array($this, 'loadTemplate'), 99);
