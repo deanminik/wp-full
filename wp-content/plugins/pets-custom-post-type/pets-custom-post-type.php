@@ -46,7 +46,7 @@ require_once plugin_dir_path(__FILE__) . 'inc/CreatePets.php';
     new pets on each reload.
 */
 
-add_action('admin_head', 'insertPetPosts');
+//add_action('admin_head', 'insertPetPosts');
 
 function insertPetPosts() {
   for ($i = 0; $i < 10; $i++) {
