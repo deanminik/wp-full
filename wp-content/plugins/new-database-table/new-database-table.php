@@ -27,13 +27,31 @@ class PetAdoptionTablePlugin
 
     add_action('wp_enqueue_scripts', array($this, 'loadAssets'));
     add_filter('template_include', array($this, 'loadTemplate'), 99);
-
+    //action to a pets
     add_action('admin_post_createpet', array($this, 'createPet'));
     add_action('admin_post_nopriv_createpet', array($this, 'createPet'));
     //admin_post is the hook action, after that whatever you want to name it 
     //nopriv -> no privileges, this is if the user is not log in at all  
-  }
 
+    //action to delete pets
+    add_action('admin_post_deletepet', array($this, 'deletePet'));
+    add_action('admin_post_nopriv_deletepet', array($this, 'createPet'));
+  }
+  function deletePet()
+  {
+    //current_user_can('administrator' -> IF THE CURRENT USER HAS PERMISSIONS 
+    if (current_user_can('administrator')) {
+
+      $id = sanitize_text_field($_POST['idtodelete']);
+      //Now we save this pet array in the database
+      global $wpdb;
+      $wpdb->delete($this->tablename, array('id' => $id));
+      wp_safe_redirect(site_url('/pet-adoption')); //wp_safe -> checks if this is a local url 
+    } else {
+      wp_safe_redirect(site_url()); //Home page 
+    }
+    exit;
+  }
   function createPet()
   {
     if (current_user_can('administrator')) {
