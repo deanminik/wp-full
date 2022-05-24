@@ -18,7 +18,7 @@ get_header(); ?>
 
 <div class="container container--narrow page-section">
 
-  <p>This page took <strong><?php echo timer_stop(); ?></strong> seconds to prepare. Found <strong><?php echo $getPets->count ?></strong> results (showing the first <?php echo count($getPets->pets)?>).</p>
+  <p>This page took <strong><?php echo timer_stop(); ?></strong> seconds to prepare. Found <strong><?php echo $getPets->count ?></strong> results (showing the first <?php echo count($getPets->pets) ?>).</p>
 
   <table class="pet-adoption-table">
     <tr>
@@ -45,6 +45,22 @@ get_header(); ?>
     <?php }
     ?>
   </table>
+  <!-- echo esc_url(admin_url('admin-post.php')) 
+     admin-post.php -> this is a flexible way to have server side code run when the specific events happens 
+     we put the function in the index file call new-database-table.php
+-->
+  <?php
+  //CHECK if this user is admin or not to show the form 
+  if (current_user_can('administrator')) { ?>
+    <form action="<?php echo esc_url(admin_url('admin-post.php')) ?>" class="create-pet-form" method="POST">
+      <P>Enter just the name for a new pet. Its species, weight, and other details with be randomly generated</P>
+      <input type="hidden" name="action" value="createpet">
+      <input type="text" name="incomingpetname" placeholder="name...">
+      <button>Add pet</button>
+    </form>
+  <?php }
+
+  ?>
 
 </div>
 

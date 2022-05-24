@@ -27,6 +27,27 @@ class PetAdoptionTablePlugin
 
     add_action('wp_enqueue_scripts', array($this, 'loadAssets'));
     add_filter('template_include', array($this, 'loadTemplate'), 99);
+
+    add_action('admin_post_createpet', array($this, 'createPet'));
+    add_action('admin_post_nopriv_createpet', array($this, 'createPet'));
+    //admin_post is the hook action, after that whatever you want to name it 
+    //nopriv -> no privileges, this is if the user is not log in at all  
+  }
+
+  function createPet()
+  {
+    if (current_user_can('administrator')) {
+      $pet = generatePet();
+      $pet['petname'] = sanitize_text_field($_POST['incomingpetname']);
+      // incomingpetname -> came from template-pets in the form 
+      //   <input type="text" name="incomingpetname" placeholder="name...">
+      //Now we save this pet array in the database
+      global $wpdb;
+      $wpdb->insert($this->tablename, $pet);
+      wp_redirect(site_url('/pet-adoption'));
+    } else {
+      wp_redirect(site_url()); //Home page 
+    }
   }
 
   //function from wordpress to work with sql server 
